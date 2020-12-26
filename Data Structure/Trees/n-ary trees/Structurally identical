@@ -1,0 +1,42 @@
+//problem:
+//Given two Generic trees, return true if they are structurally identical i.e. they are made of nodes with the same values arranged in the same way.
+ /* Input1 :10 3 20 30 40 2 40 50 0 0 0 0 
+            10 3 20 30 40 2 40 50 0 0 0 0
+    output1: true
+    */
+public class Solution {
+
+/*	TreeNode structure 
+ * 
+ * class TreeNode<T> {
+		T data;
+		ArrayList<TreeNode<T>> children;
+
+		TreeNode(T data){
+			this.data = data;
+			children = new ArrayList<TreeNode<T>>();
+		}
+	}*/
+	static boolean ans=true;
+	public static boolean checkIdentical(TreeNode<Integer> root1, TreeNode<Integer> root2){
+         if(root1.data!=root2.data){ // checking root is same or not
+              ans=false;
+             }
+        
+          if(root1.children.size()==root2.children.size()){ // cheking if the no of children are same 
+              
+            for(int i=0;i<root1.children.size();i++){
+                if(ans==false){ // if root is not same but the no of children are same 
+                    break;
+                }
+             ans=checkIdentical(root1.children.get(i),root2.children.get(i));
+                }
+          }
+        else{
+            ans=false; // if no of children are not same 
+        }
+          
+		return ans;
+	}
+	
+}
