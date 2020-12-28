@@ -1,0 +1,32 @@
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+  For a given Binary Tree of integers, find and return the height of the tree.
+
+ */
+
+public class Solution {
+
+	public static int height(BinaryTreeNode<Integer> root) {
+		if(root==null){
+            return 0;
+        }
+        int left_subtree= height(root.left);
+        int right_subtree=height(root.right);
+        
+        return Math.max(left_subtree,right_subtree)+1;
+	}
+
+}
