@@ -1,0 +1,45 @@
+import java.util.Scanner;
+class BinaryTreeNode<T>{
+   public T data;
+   public BinaryTreeNode<T> left;
+   public BinaryTreeNode<T> right;
+   BinaryTreeNode(T ele){
+        data=ele;
+        left=right=null;
+       }
+}
+class BinaryUse{
+   public static BinaryTreeNode<Integer> takeInput(Scanner s){
+      System.out.println("Enter data");
+      int rootdata=s.nextInt();
+       if(rootdata==-1){
+          return null;
+           }
+      BinaryTreeNode<Integer> root=new BinaryTreeNode<Integer>(rootdata);
+      root.left=takeInput(s); // recursive call on left subtree
+      root.right=takeInput(s); // recursive call on right subtree
+      return root;
+     }
+   public static void printree(BinaryTreeNode<Integer> root){
+       if(root==null){
+         return ;
+           }
+       String tobeprinted=root.data+"";
+        if(root.left!=null){
+          tobeprinted+="L:"+root.left.data;
+           }
+        if(root.right!=null){
+          tobeprinted+="R:"+root.right.data;
+           }
+        System.out.println(tobeprinted);
+        printree(root.left);
+        printree(root.right);
+         
+     }
+   public static void main(String args[]){
+     Scanner s=new Scanner(System.in);
+     BinaryTreeNode<Integer> root=takeInput(s);
+     printree(root);
+     s.close();
+    }
+}
