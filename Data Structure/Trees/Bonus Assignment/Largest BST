@@ -1,0 +1,110 @@
+import java.lang.Math;
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T> 
+	 * { 
+	 * 		T data; 
+	 * 		BinaryTreeNode<T> left; 
+	 * 		BinaryTreeNode<T> right;
+	 *		public BinaryTreeNode(T data) 
+	 *		{
+	 *  		this.data = data; 
+	 *  	} 
+	 *  }
+	 */
+Approach 1: Inefficient approach 
+Time Complexity: isBSt requires O(n) time and this is used for each node so the t.c would be O(n*h) which is the worst case.
+     private static boolean isBST(BinaryTreeNode<Integer> root,int min,int max){
+        if(root==null){
+             return true;
+         }
+        if(root.data<min ||root.data>max){
+            return false;
+        }
+        boolean a=isBST(root.left,min,root.data-1);
+        boolean b=isBST(root.right,root.data,max);
+		
+        return a && b;
+    }
+	private static int height(BinaryTreeNode<Integer> root){
+        if(root==null){
+            return 0;
+        }
+        int l=height(root.left);
+        int r=height(root.right);
+        return 1+Math.max(l,r);
+    }
+	public static int largestBSTSubtree(BinaryTreeNode<Integer> root) {
+        if(root==null){
+            return 0;
+        }
+		if(isBST(root,Integer.MIN_VALUE,Integer.MAX_VALUE)){
+            return height(root);
+        }
+        else{
+            return Math.max(largestBSTSubtree(root.left),largestBSTSubtree(root.right));
+        }
+	}
+
+}
+
+Approach 2: Time complexity O(n)
+class Value{
+    int min,max,height;
+    boolean isbst;
+    
+    Value(){
+    min=Integer.MAX_VALUE; // MIN value of the left subtree will be the max value of the left side
+    max=Integer.MIN_VALUE;
+    isbst=false;
+    height=0;
+    }
+}
+
+
+
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T> 
+	 * { 
+	 * 		T data; 
+	 * 		BinaryTreeNode<T> left; 
+	 * 		BinaryTreeNode<T> right;
+	 *		public BinaryTreeNode(T data) 
+	 *		{
+	 *  		this.data = data; 
+	 *  	} 
+	 *  }
+	 */
+	public static Value largesthelper(BinaryTreeNode<Integer> root){
+        Value val=new Value();
+        if(root==null){
+            val.isbst=true;
+            val.height=0;
+            return val;   
+        }
+        Value l =largesthelper(root.left); 
+        Value r= largesthelper(root.right);
+        
+        val.min=Math.min(root.data,l.min);
+        val.max=Math.max(root.data,r.max);
+        
+        if(l.isbst && r.isbst && l.max<=root.data && r.min>=root.data){
+            val.height=Math.max(l.height,r.height)+1;
+            val.isbst=true;
+        }
+        else{
+            val.height=Math.max(l.height,r.height);
+            val.isbst=false;
+        }
+        return val;
+    } 
+	public static int largestBSTSubtree(BinaryTreeNode<Integer> root) {
+		return largesthelper(root).height;
+	}
+
+}
