@@ -1,0 +1,52 @@
+import java.util.*;
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T> 
+	 * { 
+	 * 		T data; 
+	 * 		BinaryTreeNode<T> left; 
+	 * 		BinaryTreeNode<T> right;
+	 *		public BinaryTreeNode(T data) 
+	 *		{
+	 *  		this.data = data; 
+	 *  	} 
+	 *  }
+	 */
+     static  ArrayList<Integer> sorted(BinaryTreeNode<Integer> root, ArrayList<Integer> a){
+        if(root==null){
+            return a;
+        }
+        sorted(root.left,a);
+        a.add(root.data);
+        sorted(root.right,a);
+        return a;
+    }
+	public static void printNodesSumToS(BinaryTreeNode<Integer> root, int s) {
+         ArrayList<Integer> ar=new ArrayList <>();
+         ArrayList <Integer> a=sorted(root,ar);
+        Collections.sort(a);
+        Integer[] array = a.toArray(new Integer[0]);
+        int i=0;
+        int j=array.length-1;
+        while(i<j){
+            if(array[i]+array[j]==s){
+                System.out.println(array[i]+" "+array[j]);
+                array[i]=0;
+                array[j]=0;
+                i++;
+                j--;
+            }
+            else if(array[i]+array[j]>s){
+                j--;
+            }
+            else{
+                i++;
+            }
+        }
+
+		// Write your code here
+	}
+
+}
