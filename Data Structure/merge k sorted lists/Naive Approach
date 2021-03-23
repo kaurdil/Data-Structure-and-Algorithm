@@ -1,0 +1,31 @@
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length==0){
+            return null;
+        }
+        ArrayList<Integer> ar=new ArrayList<>();
+        ListNode head=null;
+        for(int i=0;i<lists.length;i++){
+            ListNode temp=lists[i];
+           if(temp!=null){
+            ar.add(temp.val);
+            while(temp.next!=null){
+                temp=temp.next;
+                ar.add(temp.val);
+            }
+           }
+        }
+     if(!ar.isEmpty()){
+        Collections.sort(ar);
+        head=new ListNode(ar.get(0));
+        ListNode t=head;
+        for(int i=1;i<ar.size();i++){
+            ListNode templ=new ListNode(ar.get(i));
+            t.next= templ;
+            t=t.next;
+        }
+     }
+        return head;
+        
+    }
+}
